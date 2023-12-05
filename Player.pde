@@ -14,11 +14,13 @@ class Player {
   void show() {
     fill(#0383FF);
     rect(location.x, location.y, 5, 5);
-    if (jumping == true){
+    if (jumping){
     location.y += 5; // gravityyyy
     if (location.y > 300) { // setting up the collission
-     location.y = 295; // cant be 300 cause it just IGNORES THE COLLISSIONNNN JOYYYY
+     location.y = 295; // cant be 300 cause it just IGNORES THE COLLISSIONNNN 
      jumping = false;
+     if (location.y > 300) {
+       
     }
     }
     
@@ -30,6 +32,8 @@ class Player {
     
     
   }
+  
+}
   
     
     

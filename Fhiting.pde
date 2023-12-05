@@ -9,7 +9,8 @@ String gamestate = "START";
 
 // objectsss
 
-Player[] player = new Player[1];
+Player player = new Player();
+Dummy dummy = new Dummy();
 
 
 
@@ -18,41 +19,44 @@ void setup () {
   size (400, 400);
   background(#000000);
   
-  player[0] = new Player();
+  player = new Player();
   
 }
 
 void draw () { 
   background(#000000);
-  player[0].show();
+  player.show();
   fill(#E8E9EA);
   rect(0, 300, 400, 400);
+  dummy.show();
   
   
 }
 
 void keyPressed () { 
     if (key == CODED) {
-      if (keyCode == UP) {
-        if (player[0].jumping == false){
-        player[0].velocity.y = -10;
-        player[0].jumping = true;
-        }
-      } else if (keyCode == DOWN) {
-        player[0].velocity.y = 10;
+  switch(keyCode) {
+    case UP: {
+      if (!player.jumping) {
+        player.velocity.y = -10;
+        player.jumping = true;
       }
-    }
-     if (key == CODED) {
-      if (keyCode == RIGHT) {
-        player[0].velocity.x = 10;
-      } else if (keyCode == LEFT) {
-        player[0].velocity.x = -10;
-      }
-     }
-     
+    } break;
+    case DOWN: {
+      player.velocity.y = 10;
+    } break;
+    case LEFT: {
+      player.velocity.x = -10;
+    } break;
+    case RIGHT: {
+      player.velocity.x = 10;
+    } break;
   }
+}
+}
+     
   
-void keyReleased(){
-  player[0].velocity.x = 0;
-       player[0].velocity.y = 0;
+void keyReleased(){ 
+  player.velocity.x = 0; // 60 - 61 is to stop player from endlessly gliding across the screen
+       player.velocity.y = 0;
 }
