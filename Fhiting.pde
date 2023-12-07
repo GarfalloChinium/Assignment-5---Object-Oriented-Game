@@ -8,55 +8,69 @@
 String gamestate = "START";
 
 // objectsss
-
-Player player = new Player();
-Dummy dummy = new Dummy();
-
-
-
+Stage stage;
 
 void setup () {
   size (400, 400);
   background(#000000);
-  
-  player = new Player();
-  
+  stage = new Stage();
 }
 
 void draw () { 
-  background(#000000);
-  player.show();
-  fill(#E8E9EA);
-  rect(0, 300, 400, 400);
-  dummy.show();
-  
-  
-}
-
-void keyPressed () { 
-    if (key == CODED) {
-  switch(keyCode) {
-    case UP: {
-      if (!player.jumping) {
-        player.velocity.y = -10;
-        player.jumping = true;
-      }
+  switch(gamestate) {
+    case "IN_PROGRESS": {
+        stage.show();
+        stage.constraint();
+        gamestate = stage.status();
     } break;
-    case DOWN: {
-      player.velocity.y = 10;
-    } break;
-    case LEFT: {
-      player.velocity.x = -10;
-    } break;
-    case RIGHT: {
-      player.velocity.x = 10;
-    } break;
+    case "VICTORY": drawVictoryScreen(); break;
+    case "LOSE": drawLosingScreen(); break;
+    case "START": drawStartScreen(); break;
   }
 }
+// victory royale screen
+void drawVictoryScreen() {
+  background(#000000);
+  fill(#FFFFFF);
+  textSize(50);
+  textAlign(CENTER, CENTER);
+  text("You Win! Try Again?", 0, 0, 400, 400);
+}
+// losing screen
+void drawLosingScreen() {
+  background(#000000);
+  fill(#FFFFFF);
+  textSize(50);
+  textAlign(CENTER, CENTER);
+  text("You Lose! Try Again?", 0, 0, 400, 400);
+}
+// start screen
+void drawStartScreen() {
+  background(#000000);
+  fill(#FFFFFF);
+  textSize(20);
+  textAlign(CENTER);
+  text("FIGHT!", 0, 20, 400, 80);
+  text("Press any key to start", 0, 120, 400, 100);
+  text("Direction key to move", 0, 220, 400, 100);
+  text("Z to attack", 0, 320, 400, 100);
+}
+
+void keyPressed() { 
+  if (gamestate.equals("IN_PROGRESS")){
+    stage.playerControl();
+  }
 }
      
   
 void keyReleased(){ 
-  player.velocity.x = 0; // 60 - 61 is to stop player from endlessly gliding across the screen
-       player.velocity.y = 0;
+  switch (gamestate) {
+    case "IN_PROGRESS": stage.handleKeyRelease(); break;
+    case "VICTORY":
+    case "LOSE": gamestate = "START"; break;
+    case "START": {
+      gamestate = "IN_PROGRESS";
+      stage = new Stage();
+    }
+  }
 }
