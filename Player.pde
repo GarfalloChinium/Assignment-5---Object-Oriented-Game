@@ -2,10 +2,15 @@ class Player {
   Hitbox hitbox;
   Hitbox attack;
   PVector velocity;
-  
   int damage = 10;
   boolean isInAir = false;
   boolean isAttacking = false;
+  
+  Sprite idleSprite;
+  Sprite jumpSprite;
+  Sprite attackSprite;
+  Sprite moveSprite;
+  Sprite activeSprite; // communicates which sprite is currently active out of the 4
   
   Player() {
     hitbox = new Hitbox();
@@ -17,17 +22,18 @@ class Player {
     attack.bottomRight = new PVector(180, 280);
     
     velocity = new PVector(0,0);
+    
+    idleSprite = new Sprite("Sprites/Player/Player Sword Idle", "PlayerIdle_", 10, 120);
+    jumpSprite = new Sprite("Sprites/Player/Player Jump", "PlayerJump_", 3, 120);
+    attackSprite = new Sprite("Sprites/Player/Player Attack", "PlayerAttack_", 6, 120);
+    moveSprite = new Sprite("Sprites/Player/Player Sword Run", "PlayerRun_", 8, 120);
+    activeSprite = idleSprite; // starting the player in idle sprite
   }
   
   // functions to show the player
   void show() {
-    fill(#0383FF);
-    rect(hitbox.topLeft.x, hitbox.topLeft.y, hitbox.width(), hitbox.height());
+    image(activeSprite.show(), hitbox.topLeft.x, hitbox.topLeft.y, hitbox.width(), hitbox.height());
     hitbox.add(velocity);
-    if (isAttacking){
-       fill(#00FF00);
-       rect(attack.topLeft.x, attack.topLeft.y, attack.width(), attack.height());
-    }
   }
   
   // player falling speed
@@ -43,6 +49,7 @@ class Player {
         case "FLOOR": {
           isInAir = false;
           hitbox.set(new PVector(hitbox.topLeft.x, objectHitbox.topLeft.y - hitbox.height()));
+          activeSprite = idleSprite;
         } break;
         case "DUMMY": {
           hitbox.set(new PVector(objectHitbox.topLeft.x - hitbox.width(), hitbox.topLeft.y));
@@ -67,6 +74,7 @@ class Player {
     if (!isInAir){
       velocity.y -= 20;
       isInAir = true;
+      activeSprite = jumpSprite;
     }
   }
     
@@ -76,18 +84,26 @@ class Player {
   
   void moveLeft() {
     velocity.x = -10;
+    activeSprite = moveSprite; 
   }
   
   void moveRight() {
     velocity.x = 10;
+    activeSprite = moveSprite; 
   }
   
   void stop() {
     velocity = new PVector(0, 0);
     isAttacking = false;
+    activeSprite = idleSprite;
+    activeSprite.reset();
   }
   
-  void attack() {
+    void attack() {
+    activeSprite = attackSprite;
+    if (!isAttacking) { // Only reset animation on the first frame of the attack
+      activeSprite.reset();
+    }
     isAttacking = true;
     attack.set(PVector.add(hitbox.topLeft, new PVector(80, -40)));
   }

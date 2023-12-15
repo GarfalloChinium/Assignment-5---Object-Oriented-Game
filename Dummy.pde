@@ -1,17 +1,22 @@
 class Dummy{
   Hitbox hitbox;
+  Sprite idleSprite;
+  Sprite hitSprite;
+  Sprite activeSprite;
   int health = 100;
   
   Dummy() {
     hitbox = new Hitbox();
     hitbox.topLeft = new PVector(300.0, 200.0);
     hitbox.bottomRight = new PVector(340.0, 300.0);
+    idleSprite = new Sprite("Sprites/Dummy/DummyIdle", "DummyIdle_", 10, 120);
+    hitSprite = new Sprite("Sprites/Dummy/DummyHit", "DummyHit_", 4, 120);
+    activeSprite = idleSprite; // starting in idle sprite
   }
   
   void show() {
     // shows the dummy
-    fill(#FF6B08);
-    rect(hitbox.topLeft.x, hitbox.topLeft.y, hitbox.width(), hitbox.height());
+    image(activeSprite.show(), hitbox.topLeft.x, hitbox.topLeft.y, hitbox.width(), hitbox.height());
   }
   
   void showHealthBar() {

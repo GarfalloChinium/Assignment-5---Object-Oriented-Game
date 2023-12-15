@@ -1,0 +1,36 @@
+Q19: What’s the difference between a for loop and a while loop?
+
+A: A for loop repeats the code a specific number of times (given a statement). As for the while loop repeats the code as long as the condition remains true, ranging from 0 to infinite! 
+
+For loops include a statement that can be executed before the loop and statement. Meanwhile, while loops we have to add that ourselves outside & inside the loop.
+
+
+Q22: What’s the difference between parameters and arguments?
+
+A: Parameters are declared in the function vs. Arguments being the values passed when calling the function.
+
+
+Q25: What’s the difference between a class and an object?
+
+A: A class is a template for creating an object and a good way to organize. An object is a manifestation of a class that takes memory space. class Player { ... } for example, describes what a Player object can do.
+
+
+Q26: What is a constructor function? What does it do and when?
+
+A: A constructor function is a function that gets executed when a new object is created. It is called when we create an object with something like player = new Player(). It allocates a memory space for the object and gives us the reference to that exact memory space / object.
+
+
+Q27: Why should each class have its own tab in Processing?
+
+A: Because each class should have a clear division and declaration of what they do, having their own tab will make it easier to find the code related to their specific responsibility!
+
+
+Q31: What’s the difference between an array and an ArrayList?
+
+A: Arrays have a fixed size that must be declared when it's constructed. (e.g: new int[5];). ArrayLists have no fixed size and can increase & decrease as needed.
+
+
+Q32: Why would you want to go through a list backwards, decrementing the index?
+
+A: Because you might want to remove some entries from the list as you go through it. If you delete entries while moving forward, you can end up skipping some entries because when you do something like list.remove(item), all the other items shifts forward and thus skip when we move to the next index.
+
